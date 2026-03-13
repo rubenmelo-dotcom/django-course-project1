@@ -3,8 +3,10 @@
 *.pot
 *.pyc
 __pycache__
-db.sqlite3
 media
+
+#added again for the course purpose
+!db.sqlite3
 
 # Backup files # 
 *.bak 
