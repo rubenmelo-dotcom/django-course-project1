@@ -55,6 +55,7 @@ html {
 body {
     font-size: 1.6rem;
     font-family: var(--font-primary);
+    background-color: var(--color-gray-2);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -89,4 +90,56 @@ h1, h2, h3, h4, h5, h6 {
 
 .main-logo-text {
 
+}
+
+.search-form {
+    border: 0.2rem solid var(--color-primary-dark);
+    max-width: 64rem;
+    margin: 0 auto;
+    border-radius: 1rem;
+    position: relative;
+    transition:all 200ms ease-in-out;
+}
+
+.search-form:focus-within {
+    border-width: 0.3rem;
+    background-color: var(--color-white);
+}
+
+.search-form:focus-within .search-button {
+    background-color: var(--color-white);
+}
+
+.search-input,
+.search-button {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 1rem;
+    transition:all 200ms ease-in-out;
+}
+
+.search-input {
+    width: 100%;
+    padding-right: 4rem;
+}
+
+.search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.search-button:focus {
+    outline: 1px solid var(--color-primary-dark);
+}
+
+.main-content {
+    padding-top: 0;
+}
+
+.main-content-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--spacing-gutter-large);
 }
