@@ -232,7 +232,7 @@ h1, h2, h3, h4, h5, h6 {
 .main-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background-color: var(--color-primary-dark);
     color: var(--color-white);
     padding: var(--spacing-gutter-large);
@@ -242,8 +242,19 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-white);
     text-decoration: none;
     transition: all 200ms ease-in-out;
+    margin-left: 10rem;
+    margin-right: 15rem;
 }
 
 .main-footer a:hover {
-    filter: brightness(0.8);
+    filter: brightness(2);
+}
+
+.main-content-detail .recipe-list-item {
+    max-width: 84rem;
+    margin: 0 auto;
+}
+
+.main-content-detail .recipe-list-item:hover {
+    transform: scale(1);
 }
