@@ -1,3 +1,12 @@
+from recipes import models
 from django.contrib import admin
 
-# Register your models here.
+
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = 'name',
+
+
+@admin.register(models.Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    ...
