@@ -3,7 +3,12 @@ from utils.recipes.factory import make_recipe
 from recipes.models import Recipe
 from django.http import Http404
 
+
 def home(request):
+    # recipes = get_list_or_404(Recipe.objects.filter(
+    #     is_published=True
+    #     ).order_by('-id'))
+
     recipes = Recipe.objects.filter(
         is_published=True
         ).order_by('-id')
@@ -33,11 +38,8 @@ def category(request, category_id):
 
 
 def recipe(request, id):
-    recipe = Recipe.objects.filter(
-        id=id,
-        is_published=True
-        ).order_by('-id').first()
-
+    recipe = get_object_or_404(Recipe, id=id,
+        is_published=True)
     return render(
         request,
         'recipes/pages/recipe-view.html',
