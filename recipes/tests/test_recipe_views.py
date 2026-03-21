@@ -1,6 +1,6 @@
 from django.urls import reverse, resolve
 from recipes import views
-from .test_base_class import RecipeTestBase
+from .test_base_class import RecipeTestBase, Recipe, Category
 
 
 class RecipeViewsTest(RecipeTestBase):
@@ -72,14 +72,15 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipe_category_template_dont_load_recipe_not_published(self):
         '''Test recipe is_published False dont show'''
         # Need a recipe for this test
-        recipe = self.make_recipe(is_published=False)
+        recipe: Recipe = self.make_recipe(is_published=False)
+        id_ = recipe.category.pk
 
         response = self.client.get(reverse(
-            'recipes:recipe', 
-            kwargs={'id': recipe.category.id}))
+            'recipes:category', 
+            kwargs={'category_id': id_}))
 
         # Check is one recipe exists
-        self.assertIn(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
     def test_recipe_recipe_views_function_is_correct(self):
         view = resolve(reverse('recipes:recipe', kwargs={'id': 1}))
@@ -105,3 +106,14 @@ class RecipeViewsTest(RecipeTestBase):
         # Check if one recipe exists
         self.assertIn(needed_title, content)
 
+    def test_recipe_recipe_template_dont_load_recipe_not_published(self):
+        '''Test recipe is_published False dont show'''
+        # Need a recipe for this test
+        recipe: Recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse(
+            'recipes:recipe', 
+            kwargs={'id': recipe.pk}))
+
+        # Check is one recipe exists
+        self.assertEqual(response.status_code, 404)
