@@ -1,6 +1,7 @@
 from django.urls import reverse, resolve
 from recipes import views
-from .test_base_class import RecipeTestBase, Recipe, Category
+from .test_base_class import RecipeTestBase
+from unittest.mock import patch
 
 
 class RecipesHomeViewsTest(RecipeTestBase):
@@ -27,9 +28,9 @@ class RecipesHomeViewsTest(RecipeTestBase):
     def test_recipes_home_template_loads_recipes(self):
         self.make_recipe()
         response = self.client.get(reverse('recipes:home'))
-        response_recipes = response.context['recipes'][0]
-        self.assertEqual(response_recipes.title, 'Recipe Title')
-        # self.assertEqual(len(response_recipes), 1)
+        response_recipes = response.context['recipes']
+        self.assertEqual(response_recipes[0].title, 'Recipe Title')
+        self.assertEqual(len(response_recipes), 1)
         
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
@@ -47,4 +48,19 @@ class RecipesHomeViewsTest(RecipeTestBase):
             '<h1>No recipes found here</h1>',
             response.content.decode('utf-8')
         )
+
+    @patch('recipes.views.PER_PAGE', new=9)
+    def test_recipes_home_pagination_show_the_qty_correct_of_objects(self):
+        CURRENT_PAGE = 1
+        TOTAL_PAGES = 3
+        for n in range(21):
+            self.make_recipe(
+                slug=f'recipe-{n}',
+                author_data={'username': f'username{n}'})
+        response = self.client.get(reverse('recipes:home'))
+        page_obj = response.context['recipes']
+        self.assertEqual(page_obj.number, CURRENT_PAGE)
+        self.assertEqual(page_obj.paginator.num_pages, TOTAL_PAGES)
+        self.assertEqual(len(page_obj.object_list), 9)
+        
 

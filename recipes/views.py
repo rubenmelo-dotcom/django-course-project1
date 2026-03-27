@@ -8,6 +8,7 @@ import os
 
 PER_PAGE = os.environ.get('PER_PAGE', 6)
 
+
 def home(request):
     # recipes = get_list_or_404(Recipe.objects.filter(
     #     is_published=True
