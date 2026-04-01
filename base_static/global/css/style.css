@@ -89,9 +89,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: 2rem;
 }
 
-.main-logo-text {
+/* .main-logo-text {
 
-}
+} */
 
 .search-form {
     border: 0.2rem solid var(--color-primary-dark);
@@ -344,6 +344,19 @@ h1, h2, h3, h4, h5, h6 {
     border: none;
     background: var(--color-primary-dark);
     color: var(--color-white);
+}
+
+.plaintext-button {
+    display: inline;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--color-primary);
+    font-size: 1.6rem;
+}
+
+.inline-form {
+    display: inline;
 }
 
 .form-content label,
