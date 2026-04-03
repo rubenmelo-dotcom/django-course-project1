@@ -53,10 +53,8 @@ class RecipesHomeViewsTest(RecipeTestBase):
     def test_recipes_home_pagination_show_the_qty_correct_of_objects(self):
         CURRENT_PAGE = 1
         TOTAL_PAGES = 3
-        for n in range(21):
-            self.make_recipe(
-                slug=f'recipe-{n}',
-                author_data={'username': f'username{n}'})
+        self.make_recipe_in_batch(21)
+        
         response = self.client.get(reverse('recipes:home'))
         page_obj = response.context['recipes']
         self.assertEqual(page_obj.number, CURRENT_PAGE)
@@ -65,10 +63,7 @@ class RecipesHomeViewsTest(RecipeTestBase):
         
     @patch('recipes.views.PER_PAGE', new=3)
     def test_invalid_page_query_uses_page_one(self):
-        for n in range(8):
-            self.make_recipe(
-                slug=f'recipe-{n}',
-                author_data={'username': f'username{n}'})
+        self.make_recipe_in_batch(8)
         
         response = self.client.get(reverse('recipes:home') + '?page=1A')
         current_page = response.context['recipes'].number
