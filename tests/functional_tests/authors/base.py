@@ -10,6 +10,7 @@ from utils.browser import make_edge_browser
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from utils.browser import make_edge_browser
+from selenium.webdriver.common.by import By
 
 
 class AuthorsBaseTest(StaticLiveServerTestCase):
@@ -23,3 +24,9 @@ class AuthorsBaseTest(StaticLiveServerTestCase):
 
     def sleep(self, seconds=5):
         time.sleep(seconds)
+
+    def get_by_placeholder(self, web_element, placeholder):
+        return web_element.find_element(
+            By.XPATH, f'//input[@placeholder="{placeholder}"]'
+        )
+    

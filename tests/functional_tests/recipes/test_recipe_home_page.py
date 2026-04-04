@@ -18,24 +18,29 @@ class RecipeHomePageFunctionalTest(RecipeBasePageFunctionalTest, RecipeMixin):
     def test_recipe_search_input_can_find_correct_recipes(self):
         recipes = self.make_recipe_in_batch()
 
-        title_needed = "This is what i'm lookgin for"
+        title_needed = 'This is what I need'
+
         recipes[0].title = title_needed
         recipes[0].save()
-        # User opens page
+
+        # Usuário abre a página
         self.browser.get(self.live_server_url)
-        # You see a search field with the text "Search for a recipe"
+
+        # Vê um campo de busca com o texto "Search for a recipe"
         search_input = self.browser.find_element(
-            By.CLASS_NAME, 'search-input')
-        # Click on this input and type your search term
-        # to find the recipe with this title
+            By.CLASS_NAME, 'search-input'
+        )
+
+        # Clica neste input e digita o termo de busca
+        # para encontrar a receita o título desejado
         search_input.send_keys(title_needed)
         search_input.send_keys(Keys.ENTER)
-        # The user sees what they were looking for on the page
+
+        # O usuário vê o que estava procurando na página
         self.assertIn(
             title_needed,
             self.browser.find_element(By.CLASS_NAME, 'main-content-list').text,
         )
-        self.sleep(2)
         
     @patch('recipes.views.PER_PAGE', new=2)
     def test_recipe_home_page_pagination(self):
