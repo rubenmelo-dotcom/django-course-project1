@@ -21,3 +21,4 @@ class RecipeAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         "slug": ('title',),
     }
+    

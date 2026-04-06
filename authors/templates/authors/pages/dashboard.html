@@ -12,7 +12,7 @@
             <ul>
                 {% for recipe in recipes %}
                     <li>
-                        <a class"recipe-title-dash" href="#">{{ recipe.title }}</a>
+                        <a class"recipe-title-dash" href="{% url "authors:dashboard_recipe_edit" recipe.id %}">{{ recipe.title }}</a>
                     </li>
                 {% empty %}
                     <li>

@@ -34,6 +34,7 @@ def make_pagination_range(
         'last_page_out_of_range': stop_range < total_pages,
     }
 
+
 def make_pagination(request, queryset, per_page, qty_pages=10):
     try:
         current_page = int(request.GET.get('page', 1))
