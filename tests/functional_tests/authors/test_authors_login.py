@@ -11,7 +11,7 @@ class AuthorsLoginTest(AuthorsBaseTest):
     def test_user_valid_data_can_login_seccessfully(self):
         user_password = 'pass'
         user = User.objects.create_user(
-            username='my_user', password=user_password, first_name='My_Name')
+            username='my_user', password=user_password)
 
         self.browser.get(self.live_server_url + reverse('authors:login'))
 
@@ -24,7 +24,7 @@ class AuthorsLoginTest(AuthorsBaseTest):
         form.submit()
 
         self.assertIn(
-            f'You are logged in with {user.first_name}',
+            f'You are logged in with {user.username}',
             self.browser.find_element(By.TAG_NAME, 'body').text
         )
 
