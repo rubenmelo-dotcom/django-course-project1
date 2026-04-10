@@ -13,7 +13,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 class RecipeBasePageFunctionalTest(StaticLiveServerTestCase):
     def setUp(self):
-        self.browser = make_edge_browser()
+        self.browser = make_edge_browser('--headless')
         return super().setUp()
     
     def tearDown(self):

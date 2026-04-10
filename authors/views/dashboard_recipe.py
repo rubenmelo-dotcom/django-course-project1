@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
-from authors.forms import RegisterForm, LoginForm
 from django.http import Http404
 from django.contrib import messages
 from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from recipes.models import Recipe
 from authors.forms.recipe_form import AuthorRecipeForm
@@ -73,3 +71,9 @@ class DashboardRecipe(View):
         return self.render_recipe(form)
 
 
+class DashboardRecipeDelete(DashboardRecipe):
+    def post(self, *args, **kwargs):
+        recipe = self.get_recipe(self.request.POST.get('id'))
+        recipe.delete()
+        messages.success(self.request, 'Deleted successfully')
+        return redirect(reverse('authors:dashboard'))
