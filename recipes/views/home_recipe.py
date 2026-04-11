@@ -3,11 +3,20 @@ from django.contrib import messages
 from recipes.models import Recipe
 from django.views.generic import ListView, DetailView
 from utils.pagination import make_pagination
-import os
+from django.shortcuts import render
 from django.db.models import Q
 from django.forms.models import model_to_dict
+from tag.models import Tag
 
-PER_PAGE = 2
+
+PER_PAGE = 9
+
+
+def theory(request, *args, **kwargs):
+    return render(
+        request,
+        'recipes/pages/theory.html',
+    )
 
 
 class RecipeListViewBase(ListView):
@@ -22,6 +31,8 @@ class RecipeListViewBase(ListView):
         query_set = query_set.filter(
             is_published=True,
         ).order_by('-id')
+        query_set = query_set.select_related('author', 'category')
+        query_set = query_set.prefetch_related('tags')
         return query_set
     
     def get_context_data(self, *args, **kwargs):
@@ -116,6 +127,34 @@ class RecipeListViewSearch(RecipeListViewBase):
                 'page_title': f'Search for "{search_term}" | ',
                 'search_term': search_term,
                 'aditional_url_query': f'&q={search_term}',
+             }
+        )
+        return context
+
+
+class RecipeListViewTag(RecipeListViewBase):
+    template_name = 'recipes/pages/tag.html'
+
+    def get_queryset(self, *args, **kwargs):
+        query_set = super().get_queryset(*args, **kwargs)
+        query_set = query_set.filter(tags__slug=self.kwargs.get('slug', ''))
+
+        return query_set
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        page_title = Tag.objects.filter(
+            slug=self.kwargs.get('slug', '')
+            ).first()
+        
+        if not page_title:
+            page_title = 'No recipes found'
+        
+        page_title = f'{page_title} - Tag | '
+
+        context.update(
+            {
+                'page_title': page_title,
              }
         )
         return context
