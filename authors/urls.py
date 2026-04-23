@@ -1,8 +1,16 @@
 from django.urls import path
 from django.shortcuts import render
 from . import views
+from rest_framework.routers import SimpleRouter
 
 app_name = 'authors'
+
+author_api_router = SimpleRouter()
+author_api_router.register(
+    'api',
+    views.AuthorViewSet,
+    basename='author-api',
+)
 
 urlpatterns = [
     path('register/', views.register_view, name='register'),
@@ -26,4 +34,11 @@ urlpatterns = [
         views.DashboardRecipeDelete.as_view(),
         name='dashboard_recipe_delete'
         ),
+    path(
+        'profile/<int:id>/',
+        views.ProfileView.as_view(),
+        name='profile'
+        ),
 ]
+
+urlpatterns += author_api_router.urls
