@@ -6,7 +6,7 @@ __pycache__
 media
 
 #added again for the course purpose
-!db.sqlite3
+db.sqlite3
 
 # Backup files # 
 *.bak 
