@@ -16,6 +16,7 @@ recipe_api_v2_router = SimpleRouter()
 recipe_api_v2_router.register(
     prefix='recipes/api/v2',
     viewset=views.RecipeAPIV2ViewSet,
+    basename='recipes-api',
 )
 
 
